@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear - The system for modern software development</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #1A1A1A;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-primary: rgba(255, 255, 255, 0.08);
+            --border-secondary: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A3A3A3;
+            --text-tertiary: #525252;
+            --accent-purple: #8B5CF6;
+            --accent-green: #10B981;
+            --accent-blue: #3B82F6;
+            --accent-orange: #F59E0B;
+            --accent-red: #EF4444;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-secondary);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #000000;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: var(--radius-sm);
+            height: 32px;
+            min-width: 80px;
+        }
+
+        .btn-primary:hover {
+            background: #F3F4F6;
+            transform: translateY(-1px);
+        }
+
+        .btn-large {
+            padding: 12px 32px;
+            font-size: 16px;
+            border-radius: var(--radius-md);
+            height: 48px;
+            min-width: 160px;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 12px 0;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 64px;
+        }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-large {
+            padding: 120px 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 120px 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .hero-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .hero-link:hover {
+            color: var(--text-primary);
+        }
+
+        .hero-link::after {
+            content: '→';
+            transition: transform 0.2s ease;
+        }
+
+        .hero-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-secondary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* Integrations Section */
+        .integrations {
+            background: var(--bg-secondary);
+        }
+
+        .integrations-visual {
+            position: relative;
+            height: 400px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            opacity: 0.8;
+        }
+
+        .integration-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .integration-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-secondary);
+        }
+
+        .integration-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-blue);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .integration-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Timeline Section */
+        .timeline {
+            text-align: center;
+        }
+
+        .timeline-visual {
+            position: relative;
+            height: 400px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-content {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        /* Under the Hood Section */
+        .under-hood {
+            background: var(--bg-secondary);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tech-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tech-item p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 120px 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+        }
+
+        .cta-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-primary);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer-logo::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .header-content {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-large {
+                padding: 80px 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                height: auto;
+                min-height: 240px;
+            }
+
+            .integrations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">Linear</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#product">Product</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#customers">Customers</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-secondary">Log in</a>
+                    <a href="#" class="btn btn-primary">Sign up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge animate-fade-in">
+                    Workflows and integrations
+                </div>
+                <h1 class="hero-title animate-fade-in">
+                    Linear is a purpose-built tool for<br>
+                    planning and building products
+                </h1>
+                <p class="hero-subtitle animate-fade-in">
+                    Meet the system for modern software development.<br>
+                    Streamline issues, projects, and product roadmaps.
+                </p>
+                <div class="hero-buttons animate-fade-in">
+                    <a href="#" class="btn btn-primary btn-large">Start building</a>
+                    <a href="#" class="hero-link">
+                        Introducing Linear for Agents
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrations Section -->
+        <section class="section integrations">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge animate-fade-in">
+                        Workflows and integrations
+                    </div>
+                    <h2 class="section-title animate-fade-in">
+                        Collaborate across<br>
+                        tools and teams
+                    </h2>
+                    <p class="section-subtitle animate-fade-in">
+                        Expand the capabilities of the Linear system with a wide variety of integrations that keep everyone in your organization aligned and focused.
+                    </p>
+                </div>
+                <div class="integrations-visual animate-fade-in">
+                    <div class="integrations-grid">
+                        <div class="integration-item">
+                            <div class="integration-icon">📧</div>
+                            <div class="integration-name">Intercom</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">🐙</div>
+                            <div class="integration-name">GitHub</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">📱</div>
+                            <div class="integration-name">Linear Mobile</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">🤖</div>
+                            <div class="integration-name">Linear Asks</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">💬</div>
+                            <div class="integration-name">Slack</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">🔗</div>
+                            <div class="integration-name">Zapier</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">📊</div>
+                            <div class="integration-name">Analytics</div>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-icon">⚡</div>
+                            <div class="integration-name">API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="section timeline">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge animate-fade-in">
+                        Project and long-term planning
+                    </div>
+                    <h2 class="section-title animate-fade-in">
+                        Set the product direction
+                    </h2>
+                    <p class="section-subtitle animate-fade-in">
+                        Align your team around a unified product timeline. Plan, manage, and track all product initiatives with Linear's visual planning tools.
+                    </p>
+                </div>
+                <div class="timeline-visual animate-fade-in">
+                    <div class="timeline-content">
+                        <h3>Product Roadmap Timeline</h3>
+                        <p>Visual project planning and milestone tracking</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title animate-fade-in">
+                        Made for modern<br>
+                        product teams
+                    </h2>
+                    <p class="section-subtitle animate-fade-in">
+                        Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
+                    </p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Purpose-built for product development</h3>
+                        <p>Linear is designed specifically for product teams, with workflows and features that match how modern software is built.</p>
+                    </div>
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Designed to move fast</h3>
+                        <p>Every interaction is optimized for speed and efficiency, helping teams maintain momentum and focus on what matters most.</p>
+                    </div>
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">✨</div>
+                        <h3>Crafted to perfection</h3>
+                        <p>Beautiful, intuitive interface that feels natural to use, with thoughtful details that make everyday tasks effortless.</p>
+                    </div>
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Built for focus</h3>
+                        <p>Minimize distractions and maximize productivity with clean, purposeful design that helps teams stay on track.</p>
+                    </div>
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Scales with your team</h3>
+                        <p>From startup to enterprise, Linear grows with your organization while maintaining speed and simplicity.</p>
+                    </div>
+                    <div class="feature-card animate-fade-in">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Seamless workflows</h3>
+                        <p>Connect your entire development process with integrations that keep your team aligned and productive.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Under the Hood Section -->
+        <section class="section under-hood">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge animate-fade-in">
+                        Under the hood
+                    </div>
+                    <h2 class="section-title animate-fade-in">
+                        Built on strong<br>
+                        foundations
+                    </h2>
+                    <p class="section-subtitle animate-fade-in">
+                        Linear is so simple to use, it's easy to overlook the wealth of complex technologies packed under the hood that keep Linear robust, safe, and blazing fast.
+                    </p>
+                </div>
+                
+                <div class="tech-grid">
+                    <div class="tech-item animate-fade-in">
+                        <h3>Linear Sync Engine</h3>
+                        <p>Built with a high-performance architecture and an obsessive focus on speed.</p>
+                    </div>
+                    <div class="tech-item animate-fade-in">
+                        <h3>Enterprise-ready security</h3>
+                        <p>Best-in-class security practices keep your work safe and secure at every layer.</p>
+                    </div>
+                    <div class="tech-item animate-fade-in">
+                        <h3>Engineered for scale</h3>
+                        <p>Built for teams of all sizes, from small startups to large enterprise organizations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <h2 class="cta-title animate-fade-in">
+                    Plan the present. Build the future.
+                </h2>
+                <div class="cta-buttons animate-fade-in">
+                    <a href="#" class="btn btn-primary btn-large">Get started</a>
+                    <a href="#" class="btn btn-secondary btn-large">Talk to sales</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#">Plan</a></li>
+                        <li><a href="#">Build</a></li>
+                        <li><a href="#">Insights</a></li>
+                        <li><a href="#">Customer Requests</a></li>
+                        <li><a href="#">Linear Asks</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Mobile</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Method</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Changelog</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Download</a></li>
+                        <li><a href="#">Switch</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul
