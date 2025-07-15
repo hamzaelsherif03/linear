@@ -6,17 +6,19 @@ const TimelineSection = () => {
     <section className="timeline-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-badge">
-            <span className="badge-dot"></span>
-            Project and long-term planning
-            <span className="badge-arrow">→</span>
+          <div className="section-header-inner">
+            <div className="section-badge">
+              <span className="badge-dot"></span>
+              Project and long-term planning
+              <span className="badge-arrow">→</span>
+            </div>
+            <h2 className="section-title">
+              Set the product direction
+            </h2>
+            <p className="section-subtitle">
+              Align your team around a unified product timeline. Plan, manage, and track all product initiatives with Linear's visual planning tools.
+            </p>
           </div>
-          <h2 className="section-title">
-            Set the product direction
-          </h2>
-          <p className="section-subtitle">
-            Align your team around a unified product timeline. Plan, manage, and track all product initiatives with Linear's visual planning tools.
-          </p>
         </div>
         
         <div className="timeline-visual">

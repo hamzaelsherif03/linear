@@ -1,5 +1,6 @@
 .integrations-section {
-  background: #0A0A0A;
+  width: 100%;
+  display: block;
   padding: 120px 0;
 }
 
@@ -10,8 +11,24 @@
 }
 
 .section-header {
+  position: relative;
+  min-height: 220px;
+  width: 100%;
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.section-header-inner {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 80px;
+  max-width: 900px;
+  width: max-content;
 }
 
 .section-badge {
@@ -24,7 +41,8 @@
   border-radius: 20px;
   font-size: 13px;
   color: #A3A3A3;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  align-self: center;
 }
 
 .badge-dot {
@@ -35,20 +53,26 @@
 }
 
 .section-title {
+  align-self: center;
   font-size: 48px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.section-title span {
+  display: block;
 }
 
 .section-subtitle {
-  font-size: 18px;
+  align-self: center;
+  font-size: 20px;
   color: #A3A3A3;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.5;
+  margin-bottom: 0;
 }
 
 .integrations-visual {
@@ -56,7 +80,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 40px;
-  margin-top: 60px;
+  margin-top: 120px;
 }
 
 .integration-demo {

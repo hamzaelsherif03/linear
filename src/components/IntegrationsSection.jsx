@@ -4,21 +4,22 @@ import './IntegrationsSection.css';
 const IntegrationsSection = () => {
   return (
     <section className="integrations-section">
-      <div className="container">
-        <div className="section-header">
+      <div className="section-header">
+        <div className="section-header-inner">
           <div className="section-badge">
             <span className="badge-dot"></span>
             Workflows and integrations
           </div>
           <h2 className="section-title">
-            Collaborate across<br />
-            tools and teams
+            <span>Collaborate across</span>
+            <span>tools and teams</span>
           </h2>
           <p className="section-subtitle">
             Expand the capabilities of the Linear system with a wide variety of integrations that keep everyone in your organization aligned and focused.
           </p>
         </div>
-        
+      </div>
+      <div className="container">
         <div className="integrations-visual">
           <div className="integration-demo">
             <div className="demo-left">

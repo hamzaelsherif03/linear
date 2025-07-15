@@ -7,17 +7,12 @@ const FeaturesSection = () => {
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">
-            Made for modern<br />
-            product teams
+            Made for modern<br />product teams
           </h2>
-          <div className="section-content">
-            <p className="section-subtitle">
-              Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
-            </p>
-            <a href="#" className="make-switch-link">
-              Make the switch →
-            </a>
-          </div>
+          <p className="section-subtitle">
+            Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.{' '}
+            <a href="#" className="make-switch-link">Make the switch →</a>
+          </p>
         </div>
         
         <div className="features-grid">

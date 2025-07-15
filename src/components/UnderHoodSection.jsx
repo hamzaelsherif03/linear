@@ -6,17 +6,19 @@ const UnderHoodSection = () => {
     <section className="under-hood-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-badge">
-            <span className="badge-dot"></span>
-            Under the hood
+          <div className="section-header-inner">
+            <div className="section-badge">
+              <span className="badge-dot"></span>
+              Under the hood
+            </div>
+            <h2 className="section-title">
+              Built on strong<br />
+              foundations
+            </h2>
+            <p className="section-subtitle">
+              Linear is so simple to use, it's easy to overlook the wealth of complex technologies packed under the hood that keep Linear robust, safe, and blazing fast.
+            </p>
           </div>
-          <h2 className="section-title">
-            Built on strong<br />
-            foundations
-          </h2>
-          <p className="section-subtitle">
-            Linear is so simple to use, it's easy to overlook the wealth of complex technologies packed under the hood that keep Linear robust, safe, and blazing fast.
-          </p>
         </div>
         
         <div className="tech-grid">
